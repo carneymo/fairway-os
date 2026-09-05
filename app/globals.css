@@ -590,6 +590,15 @@ footer p {
   align-items: center;
   gap: 14px;
 }
+.weather-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e3cfa3;
+  font-size: 14px;
+  font-weight: 550;
+  margin-bottom: 18px;
+}
 .weather-now > svg {
   color: #e3cfa3;
 }
@@ -653,17 +662,24 @@ footer p {
   margin-bottom: 25px;
 }
 .date-tabs {
-  height: 44px !important;
+  height: 62px !important;
   border-radius: 8px;
   background: #eae6dc;
   padding: 4px;
   gap: 4px;
 }
 .date-tabs > [data-slot='tabs-trigger'] {
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.3;
   padding: 8px 19px;
   font-size: 14px;
   min-height: 36px;
   color: var(--muted-foreground);
+}
+.date-tabs time {
+  font-size: 11px;
+  font-weight: 400;
 }
 .date-tabs > [data-active] {
   background: var(--primary);
@@ -1593,7 +1609,7 @@ thead th:first-child {
   .date-tabs {
     width: 100%;
     justify-content: space-between;
-    height: 46px !important;
+    height: 62px !important;
     margin-bottom: 15px;
   }
   .date-tabs > [data-slot='tabs-trigger'] {

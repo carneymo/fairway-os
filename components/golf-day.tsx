@@ -65,6 +65,14 @@ function datePlus(date: string, offset: number) {
     .toISOString()
     .slice(0, 10);
 }
+function calendarLabel(date: string, options: Intl.DateTimeFormatOptions) {
+  // This is already the course-local calendar date, not an instant to convert
+  // into the viewer's timezone.
+  return new Date(`${date}T12:00:00Z`).toLocaleDateString('en-US', {
+    ...options,
+    timeZone: 'UTC',
+  });
+}
 function priceText(c: Course) {
   return c.price ? `$${c.price.min}–${c.price.max}` : 'Check course rates';
 }
@@ -229,14 +237,11 @@ export default function GolfDay() {
           : previous,
     );
   }
-  const dayLabel =
-    offset === '0'
-      ? 'Today'
-      : offset === '1'
-        ? 'Tomorrow'
-        : new Date(date + 'T12:00:00').toLocaleDateString('en-US', {
-            weekday: 'long',
-          });
+  const selectedDateLabel = calendarLabel(date, {
+    weekday: 'long',
+    month: 'short',
+    day: 'numeric',
+  });
   const linkFor = (c: Course) =>
     `/courses/${c.id}?date=${date}&holes=${holes}${c.id.startsWith('osm-') ? `&lat=${location.latitude}&lon=${location.longitude}` : ''}`;
   return (
@@ -259,7 +264,8 @@ export default function GolfDay() {
           <section className="day-hero">
             <div className="hero-copy">
               <p className="eyebrow">
-                {dayLabel.toUpperCase()} · {location.name.toUpperCase()}
+                {selectedDateLabel.toUpperCase()} ·{' '}
+                {location.name.toUpperCase()}
               </p>
               <h1>
                 {loading
@@ -286,6 +292,10 @@ export default function GolfDay() {
               </a>
             </div>
             <aside className="hero-weather" aria-live="polite">
+              <div className="weather-date">
+                <CalendarDays size={16} />
+                <time dateTime={date}>{selectedDateLabel}</time>
+              </div>
               {loading ? (
                 <>
                   <Skeleton className="h-10 w-32 bg-white/20" />
@@ -306,7 +316,7 @@ export default function GolfDay() {
                           : 'Plan carefully'}
                     </span>
                   </div>
-                  <p>At your recommended start</p>
+                  <p>At your {hourLabel(best.start.time)} start</p>
                   <div className="weather-facts">
                     <span>
                       <Wind size={17} />
@@ -369,13 +379,20 @@ export default function GolfDay() {
               {[
                 'Today',
                 'Tomorrow',
-                new Date(datePlus(today, 2) + 'T12:00:00').toLocaleDateString(
-                  'en-US',
-                  { weekday: 'short' },
-                ),
+                calendarLabel(datePlus(today, 2), { weekday: 'short' }),
               ].map((label, i) => (
-                <TabsTrigger key={i} value={String(i)}>
-                  {label}
+                <TabsTrigger
+                  key={i}
+                  value={String(i)}
+                  aria-label={`${label}, ${calendarLabel(datePlus(today, i), { month: 'long', day: 'numeric', year: 'numeric' })}`}
+                >
+                  <span>{label}</span>
+                  <time dateTime={datePlus(today, i)}>
+                    {calendarLabel(datePlus(today, i), {
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </time>
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -452,7 +469,7 @@ export default function GolfDay() {
             {forecast && forecastExpanded && (
               <section className="forecast-panel">
                 <div className="row-between">
-                  <h3>{dayLabel}, hour by hour</h3>
+                  <h3>{selectedDateLabel} · hour by hour</h3>
                   <span className="small">
                     {day
                       ? `${forecast.daylightApproximate ? 'Play until' : 'Sunset'} ${hourLabel(day.sunset)}`
