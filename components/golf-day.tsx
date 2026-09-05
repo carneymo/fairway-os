@@ -239,9 +239,15 @@ export default function GolfDay() {
   }
   const selectedDateLabel = calendarLabel(date, {
     weekday: 'long',
-    month: 'short',
+    month: 'long',
     day: 'numeric',
   });
+  const selectedDayLabel =
+    offset === '0'
+      ? 'Today'
+      : offset === '1'
+        ? 'Tomorrow'
+        : calendarLabel(date, { weekday: 'long' });
   const linkFor = (c: Course) =>
     `/courses/${c.id}?date=${date}&holes=${holes}${c.id.startsWith('osm-') ? `&lat=${location.latitude}&lon=${location.longitude}` : ''}`;
   return (
@@ -264,6 +270,7 @@ export default function GolfDay() {
           <section className="day-hero">
             <div className="hero-copy">
               <p className="eyebrow">
+                {selectedDayLabel.toUpperCase()} ·{' '}
                 {selectedDateLabel.toUpperCase()} ·{' '}
                 {location.name.toUpperCase()}
               </p>
@@ -293,7 +300,7 @@ export default function GolfDay() {
             </div>
             <aside className="hero-weather" aria-live="polite">
               <div className="weather-date">
-                <CalendarDays size={16} />
+                <span className="weather-day">{selectedDayLabel}</span>
                 <time dateTime={date}>{selectedDateLabel}</time>
               </div>
               {loading ? (
@@ -432,12 +439,14 @@ export default function GolfDay() {
               </div>
               <div>
                 <h3>
-                  {best
-                    ? 'A little planning. A better round.'
-                    : loading
-                      ? 'Finding your window…'
-                      : 'Make room for a different plan.'}
+                  Your plan for{' '}
+                  {offset === '0' || offset === '1'
+                    ? selectedDayLabel.toLowerCase()
+                    : selectedDayLabel}
                 </h3>
+                <time className="section-date" dateTime={date}>
+                  {selectedDateLabel}
+                </time>
                 <p>
                   {best
                     ? best.reason
@@ -469,7 +478,12 @@ export default function GolfDay() {
             {forecast && forecastExpanded && (
               <section className="forecast-panel">
                 <div className="row-between">
-                  <h3>{selectedDateLabel} · hour by hour</h3>
+                  <div>
+                    <h3>{selectedDayLabel}, hour by hour</h3>
+                    <time className="section-date" dateTime={date}>
+                      {selectedDateLabel}
+                    </time>
+                  </div>
                   <span className="small">
                     {day
                       ? `${forecast.daylightApproximate ? 'Play until' : 'Sunset'} ${hourLabel(day.sunset)}`

@@ -592,12 +592,27 @@ footer p {
 }
 .weather-date {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 4px;
   color: #e3cfa3;
   font-size: 14px;
   font-weight: 550;
   margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ffffff30;
+}
+.weather-day {
+  font-family: var(--display);
+  color: var(--primary-foreground);
+  font-size: 26px;
+  line-height: 1.2;
+}
+.section-date {
+  display: block;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 550;
+  margin: 4px 0 10px;
 }
 .weather-now > svg {
   color: #e3cfa3;
