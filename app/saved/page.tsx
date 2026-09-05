@@ -1,0 +1,101 @@
+'use client';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Heart, ArrowUpRight } from 'lucide-react';
+import { COURSES } from '@/lib/golf/courses';
+import type { Course } from '@/lib/golf/types';
+import {
+  Header,
+  Footer,
+  Favorite,
+  useFavorites,
+} from '@/components/golf-shared';
+import {
+  Empty,
+  EmptyHeader,
+  EmptyTitle,
+  EmptyDescription,
+} from '@/components/ui/empty';
+export default function Saved() {
+  const { ids, toggle } = useFavorites();
+  const [snapshots, setSnapshots] = useState<Course[]>([]);
+  useEffect(() => {
+    try {
+      const v = JSON.parse(
+        localStorage.getItem('fairway:course-snapshots') ?? '{}',
+      );
+      setSnapshots(Object.values(v));
+    } catch {}
+  }, []);
+  const courses = [
+    ...COURSES,
+    ...snapshots.filter((c) => !COURSES.some((n) => n.id === c.id)),
+  ].filter((c) => ids.includes(c.id));
+  return (
+    <>
+      <Header active="saved" />
+      <main className="shell saved-page" id="main">
+        <p className="eyebrow">THE PLACES YOU KEEP COMING BACK TO</p>
+        <h1>Your kind of golf.</h1>
+        <p className="lead-copy">
+          Keep the courses you’d like to play close at hand. Saved on this
+          device.
+        </p>
+        {courses.length ? (
+          <div className="course-grid">
+            {courses.map((c) => (
+              <article className="course-card" key={c.id}>
+                <div className="image-wrap">
+                  <Link
+                    className="course-image"
+                    href={`/courses/${c.id}?lat=${c.latitude}&lon=${c.longitude}`}
+                  >
+                    {c.image ? (
+                      <Image
+                        width={640}
+                        height={380}
+                        unoptimized
+                        src={c.image}
+                        alt={`${c.name} illustrative course view`}
+                      />
+                    ) : (
+                      <span className="no-image-label">{c.city}</span>
+                    )}
+                  </Link>
+                  <Favorite course={c} selected toggle={toggle} />
+                </div>
+                <div className="course-body">
+                  <p className="course-location">{c.city}</p>
+                  <h3>{c.name}</h3>
+                  <p>{c.character}</p>
+                  <Link
+                    className="text-link"
+                    href={`/courses/${c.id}?lat=${c.latitude}&lon=${c.longitude}`}
+                  >
+                    Plan a round <ArrowUpRight size={16} />
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <Empty className="empty-state">
+            <Heart size={32} />
+            <EmptyHeader>
+              <EmptyTitle>A place for your favorites.</EmptyTitle>
+              <EmptyDescription>
+                Tap the heart on a course to keep it here for your next golf
+                day.
+              </EmptyDescription>
+            </EmptyHeader>
+            <Link className="button" href="/#courses">
+              Find a course to save
+            </Link>
+          </Empty>
+        )}
+      </main>
+      <Footer />
+    </>
+  );
+}
