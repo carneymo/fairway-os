@@ -1,5 +1,5 @@
+/* oxlint-disable nextjs/no-html-link-for-pages -- Native document navigation avoids the beta client router that left deployed links inert. */
 'use client';
-import Link from 'next/link';
 export default function ErrorPage({ reset }: { reset: () => void }) {
   return (
     <main className="shell error-page">
@@ -8,9 +8,9 @@ export default function ErrorPage({ reset }: { reset: () => void }) {
       <button className="button" onClick={reset}>
         Try again
       </button>
-      <Link className="button outline" href="/">
+      <a className="button outline" href="/">
         Back to your golf day
-      </Link>
+      </a>
     </main>
   );
 }

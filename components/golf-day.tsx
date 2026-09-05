@@ -1,6 +1,6 @@
+/* oxlint-disable nextjs/no-html-link-for-pages -- Native document navigation avoids the beta client router that left deployed links inert. */
 'use client';
 import { useEffect, useMemo, useState } from 'react';
-import Link from 'next/link';
 import { readJson } from '@/lib/golf/client';
 import Image from 'next/image';
 import {
@@ -246,12 +246,11 @@ export default function GolfDay() {
         onLocation={() => setEditLocation((v) => !v)}
       />
       <main className="shell" id="main">
-        {editLocation && (
-          <LocationEditor
-            onChoose={chooseLocation}
-            onClose={() => setEditLocation(false)}
-          />
-        )}
+        <LocationEditor
+          open={editLocation}
+          onChoose={chooseLocation}
+          onClose={() => setEditLocation(false)}
+        />
         <Tabs
           value={offset}
           onValueChange={(v) => setOffset(String(v))}
@@ -455,8 +454,10 @@ export default function GolfDay() {
                 <div className="row-between">
                   <h3>{dayLabel}, hour by hour</h3>
                   <span className="small">
-                    {day ? `Sunset ${hourLabel(day.sunset)}` : ''} ·{' '}
-                    {forecast.timezone}
+                    {day
+                      ? `${forecast.daylightApproximate ? 'Play until' : 'Sunset'} ${hourLabel(day.sunset)}`
+                      : ''}{' '}
+                    · {forecast.timezone}
                   </span>
                 </div>
                 <ForecastStrip forecast={forecast} date={date} />
@@ -468,12 +469,8 @@ export default function GolfDay() {
                     timeZone: forecast.timezone,
                   })}{' '}
                   local time ·{' '}
-                  <a
-                    href="https://open-meteo.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Open-Meteo
+                  <a href={forecast.source} target="_blank" rel="noreferrer">
+                    {forecast.sourceName ?? 'Open-Meteo'}
                   </a>
                 </p>
               </section>
@@ -534,7 +531,7 @@ export default function GolfDay() {
                   {sorted.map((c, i) => (
                     <article className="course-card" key={c.id}>
                       <div className="image-wrap">
-                        <Link
+                        <a
                           href={linkFor(c)}
                           className={`course-image ${!c.image ? 'no-image' : ''}`}
                         >
@@ -554,7 +551,7 @@ export default function GolfDay() {
                             </span>
                           )}
                           <span className="image-tag">{c.character}</span>
-                        </Link>
+                        </a>
                         <Favorite
                           course={c}
                           selected={favoriteIds.includes(c.id)}
@@ -567,9 +564,9 @@ export default function GolfDay() {
                           {c.city}
                           <span>· {c.distance?.toFixed(1)} mi</span>
                         </p>
-                        <Link href={linkFor(c)}>
+                        <a href={linkFor(c)}>
                           <h3>{c.name}</h3>
-                        </Link>
+                        </a>
                         <p>{c.tags.slice(0, 2).join(' · ')}</p>
                         <p className="course-reason">
                           <Check size={15} />
@@ -594,9 +591,9 @@ export default function GolfDay() {
                             />
                             Compare
                           </label>
-                          <Link href={linkFor(c)}>
+                          <a href={linkFor(c)}>
                             Explore course <ArrowUpRight size={17} />
-                          </Link>
+                          </a>
                         </div>
                       </div>
                     </article>
@@ -693,9 +690,9 @@ export default function GolfDay() {
                           <TableHead>Take a closer look</TableHead>
                           {selected.map((c) => (
                             <TableCell key={c.id}>
-                              <Link className="text-link" href={linkFor(c)}>
+                              <a className="text-link" href={linkFor(c)}>
                                 View course →
-                              </Link>
+                              </a>
                             </TableCell>
                           ))}
                         </TableRow>
@@ -735,7 +732,7 @@ export default function GolfDay() {
               <p>
                 Good golf days start with good information. Prices are published
                 guidance; the course confirms availability, conditions, and your
-                final price. <Link href="/about">How FairwayOS works</Link>
+                final price. <a href="/about">How FairwayOS works</a>
               </p>
             </div>
           </TabsContent>

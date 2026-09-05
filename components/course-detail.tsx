@@ -1,6 +1,6 @@
+/* oxlint-disable nextjs/no-html-link-for-pages -- Native document navigation avoids the beta client router that left deployed links inert. */
 'use client';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { readJson } from '@/lib/golf/client';
 import {
   ArrowLeft,
@@ -161,10 +161,10 @@ export default function CourseDetail({
         }}
       />
       <main className="shell course-detail" id="main">
-        <Link className="back-link" href="/#courses">
+        <a className="back-link" href="/#courses">
           <ArrowLeft size={16} />
           Back to your golf day
-        </Link>
+        </a>
         <section
           className={`detail-hero ${course.image ? '' : 'without-photo'}`}
           style={
@@ -287,9 +287,9 @@ export default function CourseDetail({
                       minute: '2-digit',
                       timeZone: forecast!.timezone,
                     })}{' '}
-                    · Sunset {day ? hourLabel(day.sunset) : 'unknown'}.
-                    Conditions on the ground and course opening status are not
-                    verified.
+                    · {forecast?.daylightApproximate ? 'Play until' : 'Sunset'}{' '}
+                    {day ? hourLabel(day.sunset) : 'unknown'}. Conditions on the
+                    ground and course opening status are not verified.
                   </p>
                 </>
               ) : (

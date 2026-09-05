@@ -1,12 +1,16 @@
-import { cached, fetchBounded } from './http';
-import type { Forecast } from './types';
+import { getNwsForecast } from './nws.ts';
+import { cached, fetchBounded } from './http.ts';
+import type { Forecast } from './types.ts';
 type WeatherPayload = {
   timezone: string;
   utc_offset_seconds: number;
   hourly: Record<string, number[] | string[]>;
   daily: Record<string, number[] | string[]>;
 };
-export async function getForecast(lat: number, lon: number): Promise<Forecast> {
+async function getOpenMeteoForecast(
+  lat: number,
+  lon: number,
+): Promise<Forecast> {
   // ~1 km cache buckets prevent arbitrary coordinate precision from fragmenting the cache.
   const latitude = lat.toFixed(2),
     longitude = lon.toFixed(2);
@@ -64,5 +68,33 @@ export async function getForecast(lat: number, lon: number): Promise<Forecast> {
         low: Number(data.daily.temperature_2m_min[i]),
       })),
     };
+  });
+}
+
+// A shared 429 should not send every course/location request back to the same
+// throttled endpoint. Successful provider fallbacks share the normal cache TTL.
+let openMeteoRetryAfter = 0;
+export async function getForecast(lat: number, lon: number): Promise<Forecast> {
+  const latitude = lat.toFixed(2),
+    longitude = lon.toFixed(2);
+  return cached(`forecast:${latitude}:${longitude}`, 15 * 60_000, async () => {
+    if (Date.now() >= openMeteoRetryAfter) {
+      try {
+        return await getOpenMeteoForecast(lat, lon);
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : 'Unknown error';
+        if (message === 'Upstream returned 429')
+          openMeteoRetryAfter = Date.now() + 10 * 60_000;
+        console.warn(
+          JSON.stringify({
+            event: 'weather_provider_fallback',
+            provider: 'open-meteo',
+            message,
+          }),
+        );
+      }
+    }
+    return getNwsForecast(latitude, longitude);
   });
 }

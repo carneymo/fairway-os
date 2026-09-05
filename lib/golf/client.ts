@@ -2,7 +2,7 @@ export async function readJson<T>(
   url: string,
   signal?: AbortSignal,
 ): Promise<T> {
-  const deadline = AbortSignal.timeout(25000);
+  const deadline = AbortSignal.timeout(35000);
   const response = await fetch(url, {
     signal: signal ? AbortSignal.any([signal, deadline]) : deadline,
   });

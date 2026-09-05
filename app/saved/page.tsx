@@ -1,6 +1,6 @@
+/* oxlint-disable nextjs/no-html-link-for-pages -- Native document navigation avoids the beta client router that left deployed links inert. */
 'use client';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { Heart, ArrowUpRight } from 'lucide-react';
 import { COURSES } from '@/lib/golf/courses';
@@ -47,7 +47,7 @@ export default function Saved() {
             {courses.map((c) => (
               <article className="course-card" key={c.id}>
                 <div className="image-wrap">
-                  <Link
+                  <a
                     className="course-image"
                     href={`/courses/${c.id}?lat=${c.latitude}&lon=${c.longitude}`}
                   >
@@ -62,19 +62,19 @@ export default function Saved() {
                     ) : (
                       <span className="no-image-label">{c.city}</span>
                     )}
-                  </Link>
+                  </a>
                   <Favorite course={c} selected toggle={toggle} />
                 </div>
                 <div className="course-body">
                   <p className="course-location">{c.city}</p>
                   <h3>{c.name}</h3>
                   <p>{c.character}</p>
-                  <Link
+                  <a
                     className="text-link"
                     href={`/courses/${c.id}?lat=${c.latitude}&lon=${c.longitude}`}
                   >
                     Plan a round <ArrowUpRight size={16} />
-                  </Link>
+                  </a>
                 </div>
               </article>
             ))}
@@ -89,9 +89,9 @@ export default function Saved() {
                 day.
               </EmptyDescription>
             </EmptyHeader>
-            <Link className="button" href="/#courses">
+            <a className="button" href="/#courses">
               Find a course to save
-            </Link>
+            </a>
           </Empty>
         )}
       </main>

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+/* oxlint-disable nextjs/no-html-link-for-pages -- Native document navigation avoids the beta client router that left deployed links inert. */
 import { Header, Footer } from '@/components/golf-shared';
 export default function About() {
   return (
@@ -34,9 +34,15 @@ export default function About() {
             <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">
               Open-Meteo
             </a>
-            . We interpret its forecasts to suggest starts; we do not measure
-            turf conditions or verify that a course is open. Forecasts are
-            cached for up to 15 minutes.
+            , with a U.S. fallback from the{' '}
+            <a href="https://www.weather.gov/" target="_blank" rel="noreferrer">
+              National Weather Service
+            </a>
+            . The forecast names its source. For NWS forecasts, “Play until” is
+            a conservative cutoff based on hourly daylight flags; it is not an
+            exact sunset time. We interpret forecasts to suggest starts; we do
+            not measure turf conditions or verify that a course is open.
+            Forecasts are cached for up to 15 minutes.
           </p>
         </section>
         <section>
@@ -98,9 +104,9 @@ export default function About() {
             this release.
           </p>
         </section>
-        <Link className="button" href="/">
+        <a className="button" href="/">
           Find your next golf day
-        </Link>
+        </a>
       </main>
       <Footer />
     </>

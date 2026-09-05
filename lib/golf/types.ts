@@ -39,6 +39,8 @@ export type Hour = {
   daylight: boolean;
 };
 export type Forecast = {
+  sourceName?: string;
+  daylightApproximate?: boolean;
   timezone: string;
   utcOffset: number;
   fetchedAt: string;

@@ -1,6 +1,6 @@
+/* oxlint-disable nextjs/no-html-link-for-pages -- Native document navigation avoids the beta client router that left deployed links inert. */
 'use client';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { readJson } from '@/lib/golf/client';
 import Image from 'next/image';
 import {
@@ -14,9 +14,14 @@ import {
   Snowflake,
   Wind,
   Navigation,
-  X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
 import {
   Combobox,
   ComboboxInput,
@@ -50,7 +55,7 @@ export function Header({
         Skip to content
       </a>
       <header className="site-header">
-        <Link className="brand" href="/">
+        <a className="brand" href="/">
           <Image
             src="/assets/logo/fairwayos-emblem.png"
             alt=""
@@ -59,20 +64,17 @@ export function Header({
             unoptimized
           />
           Fairway<span>OS</span>
-        </Link>
+        </a>
         <nav aria-label="Main navigation">
-          <Link className={active === 'day' ? 'active' : ''} href="/">
+          <a className={active === 'day' ? 'active' : ''} href="/">
             Your golf day
-          </Link>
-          <Link
-            className={active === 'courses' ? 'active' : ''}
-            href="/#courses"
-          >
+          </a>
+          <a className={active === 'courses' ? 'active' : ''} href="/#courses">
             Explore courses
-          </Link>
-          <Link className={active === 'saved' ? 'active' : ''} href="/saved">
+          </a>
+          <a className={active === 'saved' ? 'active' : ''} href="/saved">
             Saved courses
-          </Link>
+          </a>
         </nav>
         {onLocation ? (
           <button className="header-location" onClick={onLocation}>
@@ -80,10 +82,10 @@ export function Header({
             <span>{location.name}</span>
           </button>
         ) : (
-          <Link className="header-location" href="/">
+          <a className="header-location" href="/">
             <MapPin size={16} />
             <span>{location.name}</span>
-          </Link>
+          </a>
         )}
       </header>
     </>
@@ -92,14 +94,17 @@ export function Header({
 export function Footer() {
   return (
     <footer>
-      <Link className="brand" href="/">
+      <a className="brand" href="/">
         Fairway<span>OS</span>
-      </Link>
+      </a>
       <p>Find your kind of golf.</p>
       <div className="footer-links">
-        <Link href="/about">About & data sources</Link>
+        <a href="/about">About & data sources</a>
         <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">
           Weather by Open-Meteo <ArrowUpRight size={13} />
+        </a>
+        <a href="https://www.weather.gov/" target="_blank" rel="noreferrer">
+          National Weather Service <ArrowUpRight size={13} />
         </a>
       </div>
     </footer>
@@ -252,9 +257,11 @@ export function Favorite({
   );
 }
 export function LocationEditor({
+  open,
   onChoose,
   onClose,
 }: {
+  open: boolean;
   onChoose: (l: Location) => void;
   onClose: () => void;
 }) {
@@ -263,7 +270,7 @@ export function LocationEditor({
     [error, setError] = useState(''),
     [busy, setBusy] = useState(false);
   useEffect(() => {
-    if (query.trim().length < 2) {
+    if (!open || query.trim().length < 2) {
       setResults([]);
       return;
     }
@@ -287,7 +294,7 @@ export function LocationEditor({
       clearTimeout(timer);
       controller.abort();
     };
-  }, [query]);
+  }, [query, open]);
   function device() {
     if (!navigator.geolocation) {
       setError(
@@ -315,62 +322,64 @@ export function LocationEditor({
     );
   }
   return (
-    <section className="location-editor" aria-label="Change location">
-      <div className="row-between">
-        <div>
-          <h3>Where would you like to play?</h3>
-          <p>Search a city or ZIP code.</p>
-        </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Close location search"
-          onClick={onClose}
-        >
-          <X />
-        </Button>
-      </div>
-      <Combobox
-        items={results}
-        filter={null}
-        itemToStringLabel={(l: Location) => l.name}
-        onInputValueChange={setQuery}
-        onValueChange={(l: Location | null) => {
-          if (l && validCoordinates(l.latitude, l.longitude)) onChoose(l);
-        }}
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        if (!next) onClose();
+      }}
+    >
+      <DialogContent
+        className="location-editor"
+        finalFocus={() =>
+          document.querySelector<HTMLButtonElement>('.header-location')
+        }
       >
-        <ComboboxInput
-          aria-label="City or ZIP code"
-          placeholder="Denver, Boulder, San Diego…"
-          className="location-input"
-        />
-        <ComboboxContent>
-          <ComboboxList>
-            {(l: Location) => (
-              <ComboboxItem key={`${l.latitude}:${l.longitude}`} value={l}>
-                {l.name}
-              </ComboboxItem>
-            )}
-          </ComboboxList>
-        </ComboboxContent>
-      </Combobox>
-      <div className="location-actions">
-        <Button variant="outline" onClick={device} disabled={busy}>
-          <Navigation size={15} />
-          Use my location
-        </Button>
-        <Button variant="ghost" onClick={() => onChoose(DENVER)}>
-          Use Denver
-        </Button>
-      </div>
-      <p aria-live="polite" className="small">
-        {error ||
-          (busy
-            ? 'Finding your location…'
-            : query.length >= 2 && results.length === 0
-              ? 'No matching places yet. Try a nearby city.'
-              : 'Approximate location is used by default. Your choice stays on this device.')}
-      </p>
-    </section>
+        <div className="location-heading">
+          <DialogTitle>Where would you like to play?</DialogTitle>
+          <DialogDescription>Search a city or ZIP code.</DialogDescription>
+        </div>
+        <Combobox
+          items={results}
+          filter={null}
+          itemToStringLabel={(l: Location) => l.name}
+          onInputValueChange={setQuery}
+          onValueChange={(l: Location | null) => {
+            if (l && validCoordinates(l.latitude, l.longitude)) onChoose(l);
+          }}
+        >
+          <ComboboxInput
+            aria-label="City or ZIP code"
+            placeholder="Denver, Boulder, San Diego…"
+            className="location-input"
+          />
+          <ComboboxContent>
+            <ComboboxList>
+              {(l: Location) => (
+                <ComboboxItem key={`${l.latitude}:${l.longitude}`} value={l}>
+                  {l.name}
+                </ComboboxItem>
+              )}
+            </ComboboxList>
+          </ComboboxContent>
+        </Combobox>
+        <div className="location-actions">
+          <Button variant="outline" onClick={device} disabled={busy}>
+            <Navigation size={15} />
+            Use my location
+          </Button>
+          <Button variant="ghost" onClick={() => onChoose(DENVER)}>
+            Use Denver
+          </Button>
+        </div>
+        <p aria-live="polite" className="small">
+          {error ||
+            (busy
+              ? 'Finding your location…'
+              : query.length >= 2 && results.length === 0
+                ? 'No matching places yet. Try a nearby city.'
+                : 'Approximate location is used by default. Your choice stays on this device.')}
+        </p>
+      </DialogContent>
+    </Dialog>
   );
 }
