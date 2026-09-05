@@ -376,6 +376,10 @@ h3 {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+.illustration-credit span {
+  color: var(--primary);
+  font-weight: 550;
+}
 .course-card:hover .course-image img {
   transform: scale(1.035);
 }

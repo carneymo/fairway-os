@@ -12,13 +12,18 @@ export type CoursePhoto = {
   width: number;
   height: number;
   alt: string;
-  author: string;
-  sourceUrl: string;
-  license: string;
-  licenseUrl: string;
-  takenAt?: string;
   position?: string;
-};
+} & (
+  | { kind: 'illustration' }
+  | {
+      kind: 'photograph';
+      author: string;
+      sourceUrl: string;
+      license: string;
+      licenseUrl: string;
+      takenAt?: string;
+    }
+);
 export type Course = {
   id: string;
   name: string;

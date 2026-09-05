@@ -68,13 +68,20 @@ export default function About() {
             by day, season, residency, cart choice, and booking conditions.
           </p>
           <p>
-            Course photographs are credited with their source, photographer,
-            license, and capture year. They show the real course, but do not
-            establish current playing conditions. Images are resized and
-            compressed for delivery, and cropped by the layout. Where approved
-            photography is unavailable, we show a course guide and link to the
-            course’s own photos. The home-page scenic backdrop remains
-            illustrative FairwayOS design artwork.
+            Images labeled “Illustrative landscape” are AI-generated scenes
+            inspired by broad landscape characteristics, such as foothills,
+            prairie, or parkland. They are not photographs of the named course
+            and do not depict its actual holes, layout, facilities, or current
+            conditions. Original scenes are generated from text descriptions,
+            without using course photographs as references. Links to official
+            course photos are provided where available.
+          </p>
+          <p>
+            Any actual course photographs are separately credited with their
+            photographer, source, license, and capture year. Images are resized,
+            compressed, and display-cropped for responsive layouts. The
+            home-page scenic backdrop remains illustrative FairwayOS design
+            artwork.
           </p>
         </section>
         <section>

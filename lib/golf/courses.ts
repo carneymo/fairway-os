@@ -1,4 +1,5 @@
 import type { Course, Location } from './types';
+import { landscape } from './imagery.ts';
 export const DENVER: Location = {
   name: 'Denver, CO',
   latitude: 39.7392,
@@ -16,21 +17,10 @@ export const COURSES: Course[] = [
   {
     id: 'fossil-trace',
     name: 'Fossil Trace Golf Club',
-    photo: {
-      src: '/photos/fossil-trace/960.webp',
-      srcSet:
-        '/photos/fossil-trace/480.webp 480w, /photos/fossil-trace/960.webp 960w, /photos/fossil-trace/1600.webp 1600w, /photos/fossil-trace/2400.webp 2400w',
-      width: 3008,
-      height: 2000,
-      alt: 'Fossil Trace fairways and bunkers winding between sandstone outcrops in Golden, photographed in 2007',
-      author: 'James St. John',
-      sourceUrl:
-        'https://commons.wikimedia.org/wiki/File:Fossil_Trace_Golf_Course_(Golden,_Colorado,_USA)_2.jpg',
-      license: 'CC BY 2.0',
-      licenseUrl: 'https://creativecommons.org/licenses/by/2.0/',
-      takenAt: '2007-11-01',
-      position: 'center 60%',
-    },
+    photo: landscape(
+      'sandstone-foothills',
+      'buff sandstone outcrops beside a winding fairway in dry foothills',
+    ),
     city: 'Golden, CO',
     latitude: 39.7373,
     longitude: -105.2166,
@@ -71,6 +61,10 @@ export const COURSES: Course[] = [
   {
     id: 'legacy-ridge',
     name: 'Legacy Ridge Golf Course',
+    photo: landscape(
+      'rolling-front-range',
+      'rolling fairways, scattered trees, and a distant mountain horizon',
+    ),
     photosUrl: 'https://www.westyweddings.com/legacy-ridge',
     city: 'Westminster, CO',
     latitude: 39.8931,
@@ -107,6 +101,10 @@ export const COURSES: Course[] = [
   {
     id: 'arrowhead',
     name: 'Arrowhead Golf Club',
+    photo: landscape(
+      'red-rock-foothills',
+      'red sandstone formations beside a green fairway',
+    ),
     photosUrl: 'https://arcisgolf.com/clubs/arrowhead-golf-club/golf-course',
     city: 'Littleton, CO',
     latitude: 39.4447,
@@ -128,6 +126,10 @@ export const COURSES: Course[] = [
   {
     id: 'walnut-creek',
     name: 'Walnut Creek Golf Preserve',
+    photo: landscape(
+      'open-prairie-preserve',
+      'an open prairie fairway bordered by golden native grasses',
+    ),
     photosUrl: 'https://www.westyweddings.com/walnut-creek/',
     city: 'Westminster, CO',
     latitude: 39.8904,
@@ -156,6 +158,10 @@ export const COURSES: Course[] = [
   {
     id: 'indian-peaks',
     name: 'Indian Peaks Golf Course',
+    photo: landscape(
+      'mountain-meadow',
+      'a meadow fairway with mature trees and distant mountain ridges',
+    ),
     photosUrl: 'https://indianpeaksgolf.com/the-course/',
     city: 'Lafayette, CO',
     latitude: 39.9974,
@@ -177,6 +183,10 @@ export const COURSES: Course[] = [
   {
     id: 'broadlands',
     name: 'The Broadlands Golf Course',
+    photo: landscape(
+      'parkland-fairway',
+      'a parkland fairway framed by mature leafy trees',
+    ),
     photosUrl: 'https://www.thebroadlandsgc.com/golf/course',
     city: 'Broomfield, CO',
     latitude: 39.9582,

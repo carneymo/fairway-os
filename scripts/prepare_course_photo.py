@@ -1,7 +1,7 @@
-"""Prepare an approved course photo: python scripts/prepare_course_photo.py INPUT SLUG.
+"""Prepare a course image: python scripts/prepare_course_photo.py INPUT SLUG.
 
 Requires Pillow. Outputs responsive WebP files without enlarging the original.
-Record source, author, license, and capture date in the course metadata separately.
+Use --collection illustrations for generated imagery. Record provenance separately.
 """
 import argparse
 from pathlib import Path
@@ -14,10 +14,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("input", type=Path)
     parser.add_argument("slug")
+    parser.add_argument("--collection", choices=("photos", "illustrations"), default="photos")
     args = parser.parse_args()
     if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", args.slug):
         parser.error("Use a lowercase course slug, such as fossil-trace")
-    output = Path(__file__).resolve().parents[1] / "public" / "photos" / args.slug
+    output = Path(__file__).resolve().parents[1] / "public" / args.collection / args.slug
     with Image.open(args.input) as source:
         photo = ImageOps.exif_transpose(source).convert("RGB")
         if photo.width < 960:

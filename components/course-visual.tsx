@@ -54,6 +54,13 @@ export function CourseVisual({
 
 export function PhotoCredit({ course }: { course: Course }) {
   if (!course.photo) return null;
+  if (course.photo.kind === 'illustration')
+    return (
+      <div className="photo-credit illustration-credit">
+        <span>Illustrative landscape</span> · AI-generated, not an actual course
+        photo
+      </div>
+    );
   return (
     <div className="photo-credit">
       Photo:{' '}

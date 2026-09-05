@@ -1,0 +1,75 @@
+{
+  "tool": "Built-in image_gen (text-only generation; no reference photos)",
+  "generated_on": "2026-09-05",
+  "native_size": [
+    1536,
+    1024
+  ],
+  "requested_size": [
+    2400,
+    1600
+  ],
+  "upscaled": false,
+  "assets": [
+    {
+      "slug": "sandstone-foothills",
+      "original": ".build-assets/illustrations/sandstone-foothills.png",
+      "variants": [
+        "public/illustrations/sandstone-foothills/480.webp",
+        "public/illustrations/sandstone-foothills/960.webp",
+        "public/illustrations/sandstone-foothills/1536.webp"
+      ],
+      "prompt": "Use case: photorealistic-natural. Asset type: premium golf travel website card and wide hero. Create one original plausible landscape, an illustrative archetype rather than a depiction of an actual course. Style: crisp premium editorial travel photography, natural clear morning light, rich realistic greens and warm grasses, deep focus, extremely sharp detailed fairway texture and trees, believable terrain. Wide landscape composition, ideally 2400x1600 or highest appropriate resolution, with meaningful landscape filling frame and composition also useful cropped to 16:9. Avoid fog, haze, blur, depth-of-field blur, oversaturation, text, logos, watermark, people, buildings, collage. Do not replicate any existing photograph or actual golf-course layout. Scene: Buff sandstone outcrops beside a winding emerald golf fairway through Colorado-like foothills, textured tawny rock shelves and natural grasses, undulating foothill ridge beyond."
+    },
+    {
+      "slug": "rolling-front-range",
+      "original": ".build-assets/illustrations/rolling-front-range.png",
+      "variants": [
+        "public/illustrations/rolling-front-range/480.webp",
+        "public/illustrations/rolling-front-range/960.webp",
+        "public/illustrations/rolling-front-range/1536.webp"
+      ],
+      "prompt": "Use case: photorealistic-natural. Asset type: premium golf travel website card and wide hero. Create one original plausible landscape, an illustrative archetype rather than a depiction of an actual course. Style: crisp premium editorial travel photography, natural clear morning light, rich realistic greens and warm grasses, deep focus, extremely sharp detailed fairway texture and trees, believable terrain. Wide landscape composition, ideally 2400x1600 or highest appropriate resolution, with meaningful landscape filling frame and composition also useful cropped to 16:9. Avoid fog, haze, blur, depth-of-field blur, oversaturation, text, logos, watermark, people, buildings, collage. Do not replicate any existing photograph or actual golf-course layout. Scene: A sweeping golf fairway over gently undulating green terrain with scattered mature deciduous trees, warm native grasses, and a far mountain horizon along the Colorado-like Front Range."
+    },
+    {
+      "slug": "red-rock-foothills",
+      "original": ".build-assets/illustrations/red-rock-foothills.png",
+      "variants": [
+        "public/illustrations/red-rock-foothills/480.webp",
+        "public/illustrations/red-rock-foothills/960.webp",
+        "public/illustrations/red-rock-foothills/1536.webp"
+      ],
+      "prompt": "Use case: photorealistic-natural. Asset type: premium golf travel website card and wide hero. Create one original plausible landscape, an illustrative archetype rather than a depiction of an actual course. Style: crisp premium editorial travel photography, natural clear morning light, rich realistic greens and warm grasses, deep focus, extremely sharp detailed fairway texture and trees, believable terrain. Wide landscape composition, ideally 2400x1600 or highest appropriate resolution, with meaningful landscape filling frame and composition also useful cropped to 16:9. Avoid fog, haze, blur, depth-of-field blur, oversaturation, text, logos, watermark, people, buildings, collage. Do not replicate any existing photograph or actual golf-course layout. Scene: Dramatic towering tilted red sandstone formations beside a lush green golf fairway, rugged rusty rock fins and golden native grass, striking foothill landscape. Invent original rock forms, not identifiable landmarks or real holes."
+    },
+    {
+      "slug": "open-prairie-preserve",
+      "original": ".build-assets/illustrations/open-prairie-preserve.png",
+      "variants": [
+        "public/illustrations/open-prairie-preserve/480.webp",
+        "public/illustrations/open-prairie-preserve/960.webp",
+        "public/illustrations/open-prairie-preserve/1536.webp"
+      ],
+      "prompt": "Use case: photorealistic-natural. Asset type: premium golf travel website card and wide hero. Create one original plausible landscape, an illustrative archetype rather than a depiction of an actual course. Style: crisp premium editorial travel photography, natural clear morning light, rich realistic greens and warm grasses, deep focus, extremely sharp detailed fairway texture and trees, believable terrain. Wide landscape composition, ideally 2400x1600 or highest appropriate resolution, with meaningful landscape filling frame and composition also useful cropped to 16:9. Avoid fog, haze, blur, depth-of-field blur, oversaturation, text, logos, watermark, people, buildings, collage. Do not replicate any existing photograph or actual golf-course layout. Scene: Expansive native prairie golf landscape, broad open green fairway sweeping between tall golden grasses, very few trees, enormous sense of open space and a long distant Colorado-like Front Range mountain skyline."
+    },
+    {
+      "slug": "mountain-meadow",
+      "original": ".build-assets/illustrations/mountain-meadow.png",
+      "variants": [
+        "public/illustrations/mountain-meadow/480.webp",
+        "public/illustrations/mountain-meadow/960.webp",
+        "public/illustrations/mountain-meadow/1536.webp"
+      ],
+      "prompt": "Use case: photorealistic-natural. Asset type: premium golf travel website card and wide hero. Create one original plausible landscape, an illustrative archetype rather than a depiction of an actual course. Style: crisp premium editorial travel photography, natural clear morning light, rich realistic greens and warm grasses, deep focus, extremely sharp detailed fairway texture and trees, believable terrain. Wide landscape composition, ideally 2400x1600 or highest appropriate resolution, with meaningful landscape filling frame and composition also useful cropped to 16:9. Avoid fog, haze, blur, depth-of-field blur, oversaturation, text, logos, watermark, people, buildings, collage. Do not replicate any existing photograph or actual golf-course layout. Scene: An inviting mountain meadow golf course with a richly textured fairway, a small stand of mature trees, warm meadow grasses, and distant layered Rocky Mountain ridges under a clear blue sky."
+    },
+    {
+      "slug": "parkland-fairway",
+      "original": ".build-assets/illustrations/parkland-fairway.png",
+      "variants": [
+        "public/illustrations/parkland-fairway/480.webp",
+        "public/illustrations/parkland-fairway/960.webp",
+        "public/illustrations/parkland-fairway/1536.webp"
+      ],
+      "prompt": "Use case: photorealistic-natural. Asset type: premium golf travel website card and wide hero. Create one original plausible landscape, an illustrative archetype rather than a depiction of an actual course. Style: crisp premium editorial travel photography, natural clear morning light, rich realistic greens and warm grasses, deep focus, extremely sharp detailed fairway texture and trees, believable terrain. Wide landscape composition, ideally 2400x1600 or highest appropriate resolution, with meaningful landscape filling frame and composition also useful cropped to 16:9. Avoid fog, haze, blur, depth-of-field blur, oversaturation, text, logos, watermark, people, buildings, collage. Do not replicate any existing photograph or actual golf-course layout. Scene: An inviting parkland golf fairway, mature leafy trees framing low rolling green terrain, subtly curved fairway edges and warm rough, and a subtle faraway mountain horizon."
+    }
+  ]
+}
