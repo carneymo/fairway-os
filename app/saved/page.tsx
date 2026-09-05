@@ -1,7 +1,7 @@
 /* oxlint-disable nextjs/no-html-link-for-pages -- Native document navigation avoids the beta client router that left deployed links inert. */
 'use client';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import { CourseVisual, PhotoCredit } from '@/components/course-visual';
 import { Heart, ArrowUpRight } from 'lucide-react';
 import { COURSES } from '@/lib/golf/courses';
 import type { Course } from '@/lib/golf/types';
@@ -51,20 +51,11 @@ export default function Saved() {
                     className="course-image"
                     href={`/courses/${c.id}?lat=${c.latitude}&lon=${c.longitude}`}
                   >
-                    {c.image ? (
-                      <Image
-                        width={640}
-                        height={380}
-                        unoptimized
-                        src={c.image}
-                        alt={`${c.name} illustrative course view`}
-                      />
-                    ) : (
-                      <span className="no-image-label">{c.city}</span>
-                    )}
+                    <CourseVisual course={c} />
                   </a>
                   <Favorite course={c} selected toggle={toggle} />
                 </div>
+                <PhotoCredit course={c} />
                 <div className="course-body">
                   <p className="course-location">{c.city}</p>
                   <h3>{c.name}</h3>

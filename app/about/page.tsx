@@ -68,10 +68,13 @@ export default function About() {
             by day, season, residency, cart choice, and booking conditions.
           </p>
           <p>
-            Course imagery is supplied FairwayOS design artwork and is
-            illustrative. It should not be used to assess current course
-            appearance or conditions. Open-data listings use a simple image-free
-            treatment.
+            Course photographs are credited with their source, photographer,
+            license, and capture year. They show the real course, but do not
+            establish current playing conditions. Images are resized and
+            compressed for delivery, and cropped by the layout. Where approved
+            photography is unavailable, we show a course guide and link to the
+            course’s own photos. The home-page scenic backdrop remains
+            illustrative FairwayOS design artwork.
           </p>
         </section>
         <section>

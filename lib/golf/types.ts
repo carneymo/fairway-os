@@ -6,13 +6,27 @@ export type Location = {
   source: 'default' | 'ip' | 'search' | 'device';
 };
 export type Source = { label: string; url: string; checkedAt: string };
+export type CoursePhoto = {
+  src: string;
+  srcSet: string;
+  width: number;
+  height: number;
+  alt: string;
+  author: string;
+  sourceUrl: string;
+  license: string;
+  licenseUrl: string;
+  takenAt?: string;
+  position?: string;
+};
 export type Course = {
   id: string;
   name: string;
   city: string;
   latitude: number;
   longitude: number;
-  image?: string;
+  photo?: CoursePhoto;
+  photosUrl?: string;
   holes?: number;
   par?: number;
   character: string;

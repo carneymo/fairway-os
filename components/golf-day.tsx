@@ -2,7 +2,7 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
 import { readJson } from '@/lib/golf/client';
-import Image from 'next/image';
+import { CourseVisual, PhotoCredit } from '@/components/course-visual';
 import {
   Table,
   TableHeader,
@@ -562,26 +562,11 @@ export default function GolfDay() {
                   {sorted.map((c, i) => (
                     <article className="course-card" key={c.id}>
                       <div className="image-wrap">
-                        <a
-                          href={linkFor(c)}
-                          className={`course-image ${!c.image ? 'no-image' : ''}`}
-                        >
-                          {c.image ? (
-                            <Image
-                              width={640}
-                              height={380}
-                              unoptimized
-                              src={c.image}
-                              alt={`${c.name} illustrative course view`}
-                              loading={i < 3 ? 'eager' : 'lazy'}
-                            />
-                          ) : (
-                            <span>
-                              <Flag size={36} />
-                              <span>Explore the course</span>
-                            </span>
+                        <a href={linkFor(c)} className="course-image">
+                          <CourseVisual course={c} eager={i < 3} />
+                          {c.photo && (
+                            <span className="image-tag">{c.character}</span>
                           )}
-                          <span className="image-tag">{c.character}</span>
                         </a>
                         <Favorite
                           course={c}
@@ -589,6 +574,7 @@ export default function GolfDay() {
                           toggle={toggle}
                         />
                       </div>
+                      <PhotoCredit course={c} />
                       <div className="course-body">
                         <p className="course-location">
                           <MapPin size={14} />

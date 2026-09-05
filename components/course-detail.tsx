@@ -2,6 +2,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { readJson } from '@/lib/golf/client';
+import { CourseVisual, PhotoCredit } from '@/components/course-visual';
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -166,16 +167,10 @@ export default function CourseDetail({
           Back to your golf day
         </a>
         <section
-          className={`detail-hero ${course.image ? '' : 'without-photo'}`}
-          style={
-            course.image
-              ? {
-                  backgroundImage: `linear-gradient(90deg,rgba(8,38,29,.86),rgba(8,38,29,.12)),url('${course.image}')`,
-                }
-              : undefined
-          }
+          className={`detail-hero ${course.photo ? 'with-photo' : 'without-photo'}`}
         >
-          <div>
+          <CourseVisual course={course} hero />
+          <div className="detail-hero-copy">
             <p className="eyebrow">
               {course.city.toUpperCase()} ·{' '}
               {course.tags.includes('Public')
@@ -200,12 +195,18 @@ export default function CourseDetail({
             selected={ids.includes(course.id)}
             toggle={toggle}
           />
-          {course.image && (
-            <span className="illustration-caption">
-              Illustrative course image from the FairwayOS design collection
-            </span>
-          )}
         </section>
+        <PhotoCredit course={course} />
+        {course.photosUrl && (
+          <a
+            className="text-link course-gallery-link"
+            href={course.photosUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View photos on the course website <ArrowUpRight size={14} />
+          </a>
+        )}
         <div className="detail-layout">
           <div className="detail-main">
             <section className="editorial-section">

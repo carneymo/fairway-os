@@ -6,7 +6,7 @@ A golfer-first website: understand the golf day, compare nearby courses, plan a 
 
 Node 24 and pnpm 11 are recommended. Install with `pnpm install`, then `pnpm dev`. Run `pnpm typecheck`, `pnpm lint`, `pnpm test`, and `pnpm build` before deploying. The build emits a Cloudflare Worker and static assets.
 
-The existing FairwayOS design exports inform the green/gold palette, Playfair Display and Inter typography, editorial layout, and supplied imagery. The images are explicitly presented as illustrative design artwork.
+The existing FairwayOS design exports inform the green/gold palette, Playfair Display and Inter typography, editorial layout, and supplied imagery. The landing-page backdrop remains illustrative design artwork; course photography has explicit source and license credits, with information-card fallbacks where photos are unavailable.
 
 ## Architecture
 
@@ -53,3 +53,8 @@ Lint covers owned application code. The unmodified bundled UI catalog and its mo
 Navigation uses native anchors for normal document and fragment navigation, including keyboard/modifier clicks, instead of depending on the beta router's client interception. The location picker uses the installed Dialog primitive for a portaled overlay, modal focus containment, Escape/outside dismissal, and focus restoration.
 
 Weather falls back to [NWS](https://www.weather.gov/documentation/services-web-api) for U.S. locations if Open-Meteo fails. NWS point metadata is cached for 24 hours, complete forecasts for 15 minutes, and an Open-Meteo 429 opens a 10-minute per-instance cooldown. Both NWS hourly periods and gridded gusts are required. Incomplete safety inputs exclude an hour; no weather is fabricated. NWS daytime flags supply a conservative “Play until” cutoff at the start of the last daytime hour, not an astronomical sunset. Outside NWS coverage, a failed Open-Meteo request remains explicitly unavailable. Requests are bounded to 9 seconds each; the browser allows 35 seconds for sequential provider fallback. Provider failures are structured logs without credentials or coordinates.
+
+
+Course photography uses explicit `CoursePhoto` metadata and static 480/960/1600/2400px WebP variants, selected through `srcset` and `sizes` on cards and detail heroes. Only include photography whose identity and reuse grant have been verified. Run `python scripts/prepare_course_photo.py INPUT COURSE-SLUG` with Pillow installed; it refuses small inputs and never upscales. Add alt text, credit, source page, license URL, and capture date to the course record. Rendering fails back to the course guide if an image cannot load. Source originals stay in ignored `.build-assets/`; no third-party hotlink dependency is required.
+
+Current photo: Fossil Trace, James St. John, photographed 2007-11-01, CC BY 2.0. Source: https://commons.wikimedia.org/wiki/File:Fossil_Trace_Golf_Course_(Golden,_Colorado,_USA)_2.jpg . Derivatives are resized/re-encoded and display-cropped; no scene content is generated or altered. Legacy Ridge, Arrowhead, Walnut Creek, Indian Peaks, and Broadlands still need supplied/licensed photos; their detail pages link to official course/gallery sites. Existing small illustrative course PNG files are retained as unused supplied reference assets. The landing-page backdrop remains illustrative.
